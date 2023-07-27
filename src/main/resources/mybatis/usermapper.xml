@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eventiming.form2.DAO.userdao">
+    <select id="selectUserPasswordByUsername" resultType="java.lang.String">
+        SELECT password FROM t_user WHERE username = #{username}
+    </select>
+
+    <select id="selectUserPasswordByEmail" resultType="java.lang.String">
+        SELECT password FROM t_user WHERE email = #{email}
+    </select>
+
+    <select id="selectUserById" resultType="com.eventiming.form2.pojo.user">
+        SELECT * FROM t_user WHERE userid = #{userid}
+    </select>
+
+    <select id="selectUserByUsername" resultType="com.eventiming.form2.pojo.user">
+        SELECT * FROM t_user WHERE username = #{username}
+    </select>
+
+    <select id="selectUserByEmail" resultType="com.eventiming.form2.pojo.user">
+        SELECT * FROM t_user WHERE email = #{email}
+    </select>
+
+    <select id="selectUsersByRegisterTimeById" resultType="com.eventiming.form2.pojo.user">
+        SELECT * FROM t_user WHERE registertime > #{registertime}
+    </select>
+
+    <update id="updateUserNameById">
+        UPDATE t_user SET username = #{newUsername} WHERE userid = #{userid}
+    </update>
+
+    <update id="updateUserPasswordByID">
+        UPDATE t_user SET password = #{password} WHERE userid = #{userid}
+    </update>
+
+    <update id="updateUserEmailById">
+        UPDATE t_user SET email = #{newEmail} WHERE userid = #{userid}
+    </update>
+
+    <insert id="insertUser">
+        insert into t_user(userid, username, password, email, registertime)
+        values(#{userid}, #{username}, #{password}, #{email}, #{registertime})
+    </insert>
+
+    <delete id="deleteUserById">
+        DELETE FROM t_user WHERE userid = #{userid}
+    </delete>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eventiming.form2.DAO.topicdao">
+
+    <insert id="insertTopic" parameterType="com.eventiming.form2.pojo.topic">
+        insert into t_topic(title, userid, username, posttime, lastreplyedtime, lasteditedtime)
+        values (#{title}, #{userid}, #{username}, #{posttime}, #{lastreplyedtime}, #{lasteditedtime})
+    </insert>
+
+    <delete id="deleteTopic" parameterType="java.math.BigInteger">
+        delete from t_topic where topicid = #{topicid}
+    </delete>
+
+    <update id="updateTopicTitle" parameterType="com.eventiming.form2.pojo.topic">
+        update t_topic set title = #{title} where topicid = #{topicid}
+    </update>
+
+    <update id="updateTopicLastReplyedTime" parameterType="com.eventiming.form2.pojo.topic">
+        update t_topic set lastreplyedtime = #{lastreplyedtime} where topicid = #{topicid}
+    </update>
+
+    <update id="updateTopicLastEditedTime" parameterType="com.eventiming.form2.pojo.topic">
+        update t_topic set lasteditedtime = #{lasteditedtime} where topicid = #{topicid}
+    </update>
+
+    <select id="selectTopicByUser" resultType="com.eventiming.form2.pojo.topic">
+        select * from t_topic where userid = #{userid}
+    </select>
+
+    <select id="selectTopicByTitle" resultType="com.eventiming.form2.pojo.topic">
+        select * from t_topic where title = #{title}
+    </select>
+
+    <select id="selectTopicById" resultType="com.eventiming.form2.pojo.topic">
+        select * from t_topic where title like concat('%', #{title}, '%')
+    </select>
+
+    <select id="selectTopicByPostedTime" resultType="com.eventiming.form2.pojo.topic">
+        select * from t_topic where posttime > #{posttime}
+    </select>
+
+    <select id="selectTopicByEditedTime" resultType="com.eventiming.form2.pojo.topic">
+        select * from t_topic where lasteditedtime > #{editedtime}
+    </select>
+
+</mapper>

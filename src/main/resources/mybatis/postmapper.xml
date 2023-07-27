@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eventiming.form2.DAO.postDao">
+
+    <insert id="insertPost">
+        insert into t_post(topicid, userid, postcontext, timestamp)
+        values(#{topicid}, #{userid}, #{postcontext}, #{timestamp})
+    </insert>
+
+    <delete id="deletePostById">
+        delete from t_post where postid = #{postid}
+    </delete>
+
+    <update id="updatePost">
+        update t_post
+        set postcontext = #{postcontext}
+        where postid = #{postid}
+    </update>
+
+    <select id="selectPostById" resultType="com.eventiming.form2.pojo.post">
+        select * from t_post where postid = #{postid}
+    </select>
+
+    <select id="selectPostsByTopicId" resultType="com.eventiming.form2.pojo.post">
+        select * from t_post where topicid = #{topicid}
+    </select>
+
+    <select id="selectPostsByUserId" resultType="com.eventiming.form2.pojo.post">
+        select * from t_post where userid = #{userid}
+    </select>
+
+</mapper>

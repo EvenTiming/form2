@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- usermapper.xml -->
+<mapper namespace="com.eventiming.form2.DAO.userstatusDao">
+
+    <!-- 1. 根据用户id返回用户状态 -->
+    <select id="selectUserStatusById" resultType="com.eventiming.form2.pojo.userstatus">
+        SELECT *
+        FROM t_userstatus
+        WHERE userid = #{userid}
+    </select>
+
+    <!-- 2. 根据用户id返回用户组 -->
+    <select id="selectUserGroupById" resultType="int">
+        SELECT usergroup
+        FROM t_userstatus
+        WHERE userid = #{userid}
+    </select>
+
+    <!-- 3. 根据用户id更新用户组 -->
+    <update id="updateUserGroupById">
+        UPDATE t_userstatus
+        SET usergroup = #{usergroup}
+        WHERE userid = #{userid}
+    </update>
+
+    <!-- 4. 返回符合话题数量范围的用户id -->
+    <select id="selectUserIdByTopicNum" resultType="BigInteger">
+        SELECT userid
+        FROM t_userstatus
+        WHERE topicnum BETWEEN #{min} AND #{max}
+    </select>
+
+    <!-- 5. 返回符合回复数量范围的用户id -->
+    <select id="selectUserIdByThreadNum" resultType="BigInteger">
+        SELECT userid
+        FROM t_userstatus
+        WHERE threadnum BETWEEN #{min} AND #{max}
+    </select>
+
+    <!-- 6. 返回话题数量前num名的用户id -->
+    <select id="selectUserIdBytopTopicNum" resultType="BigInteger">
+        SELECT userid
+        FROM t_userstatus
+        ORDER BY topicnum DESC
+        LIMIT #{num} OFFSET #{offset}
+    </select>
+
+    <!-- 7. 返回回复数量前num名的用户id -->
+    <select id="selectUserIdBytopThreadNum" resultType="BigInteger">
+        SELECT userid
+        FROM t_userstatus
+        ORDER BY threadnum DESC
+        LIMIT #{num} OFFSET #{offset}
+    </select>
+
+    <select id="selectUserIdByGroup">
+        SELECT *
+        FROM t_userstatus
+        WHERE usergroup = #{group}
+    </select>
+
+    <insert id="insertUserStatus">
+        insert into t_userstatus(userid, usergroup, lastactivetime ,topicnum, threadnum)
+        values(#{userid}, #{usergroup},#{lastactivetime},#{topicnum},#{threadnum})
+    </insert>
+
+    <update id="updateUserTopicNum">
+        update t_userstatus
+        set ${topicnum} = ${topicnum} + 1,
+            lastactivetime = #{timestamp}
+        where userid = #{userid}
+    </update>
+
+    <update id="updateUserThreadNum">
+        update t_userstatus
+        set ${threadnum} = ${threadnum} + 1,
+        lastactivetime = #{timestamp}
+        where userid = #{userid}
+    </update>
+</mapper>
