@@ -5,7 +5,7 @@
 <mapper namespace="com.eventiming.form2.DAO.postDao">
 
     <insert id="insertPost">
-        insert into t_post(topicid, userid, postcontext, timestamp)
+        insert into t_post(topicid, userid, postcontext, posttime)
         values(#{topicid}, #{userid}, #{postcontext}, #{timestamp})
     </insert>
 

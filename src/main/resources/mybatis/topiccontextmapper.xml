@@ -6,7 +6,7 @@
 
 
         <insert id="insertContext">
-            insert into t_topiccontext(topicid, text)
+            insert into t_topiccontext(topicid, context)
             values(#{topicid}, #{text})
         </insert>
 
@@ -21,7 +21,7 @@
         </update>
 
         <select id="selectContext" resultType="String">
-            select text from t_topiccontext where topicid = #{topicid}
+            select context from t_topiccontext where topicid = #{topicid}
         </select>
 
 </mapper>
