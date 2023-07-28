@@ -1,6 +1,7 @@
 package com.eventiming.form2.Service;
 
 import com.eventiming.form2.DAO.userdao;
+import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.userstatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,9 @@ public interface UserService {
 
     int Register(String username, String password, String email);
 
-    userstatus LoginByUserName(String username, String password);
+    ResponseData<userstatus> LoginByUserName(String username, String password);
 
-    userstatus LoginByEmail(String email, String password);
+    ResponseData<userstatus> LoginByEmail(String email, String password);
 
     int ChangeUserName(BigInteger userid , String newName);
 

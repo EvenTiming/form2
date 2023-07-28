@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.eventiming.form2")
 @EnableScheduling
 public class Form2Application {
-
 	public static void main(String[] args) {
 		SpringApplication.run(Form2Application.class, args);
 	}

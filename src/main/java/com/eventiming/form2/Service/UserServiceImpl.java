@@ -2,8 +2,10 @@ package com.eventiming.form2.Service;
 
 import com.eventiming.form2.DAO.userdao;
 import com.eventiming.form2.DAO.userstatusDao;
+import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.user;
 import com.eventiming.form2.pojo.userstatus;
+import com.eventiming.form2.util.TokenMangeer;
 import com.eventiming.form2.util.UserIdGenerate;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,6 +23,8 @@ public class UserServiceImpl implements UserService {
     private userstatusDao userstatusdao;
     @Autowired
     private UserIdGenerate userIdGenerate;
+    @Autowired
+    private TokenMangeer tokenMangeer;
 
     public int Register(String username, String password, String email) {
         try{
@@ -38,28 +43,40 @@ public class UserServiceImpl implements UserService {
         return 1;
     }
 
-    public userstatus LoginByUserName(String username, String password){
+    public ResponseData<userstatus> LoginByUserName(String username, String password){
+        ResponseData<userstatus> responseData =new ResponseData<userstatus>();
         user result = userd.selectUserByUsername(username);
         if(result == null){
-            return null;
+            responseData.setCode("500");
+            return responseData;
         } else{
             if(result.getPassword().equals(password)){
-                return userstatusdao.selectUserStatusById(result.getUserid());
+                responseData.setCode("100");
+                responseData.setData(userstatusdao.selectUserStatusById(result.getUserid()));
+                responseData.setToken(tokenMangeer.getToken(result.getUserid()));
+                return responseData;
             } else{
-                return null;
+                responseData.setCode("600");
+                return responseData;
             }
         }
     }
 
-    public  userstatus LoginByEmail(String email, String password){
+    public ResponseData<userstatus> LoginByEmail(String email, String password){
+        ResponseData<userstatus> responseData =new ResponseData<userstatus>();
         user result = userd.selectUserByEmail(email);
         if(result == null){
-            return null;
+            responseData.setCode("500");
+            return responseData;
         } else{
             if(result.getPassword().equals(password)){
-                return userstatusdao.selectUserStatusById(result.getUserid());
+                responseData.setCode("100");
+                responseData.setData(userstatusdao.selectUserStatusById(result.getUserid()));
+                responseData.setToken(tokenMangeer.getToken(result.getUserid()));
+                return responseData;
             } else{
-                return null;
+                responseData.setCode("600");
+                return responseData;
             }
         }
     }

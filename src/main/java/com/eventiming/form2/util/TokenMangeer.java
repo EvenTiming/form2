@@ -44,14 +44,13 @@ public class TokenMangeer {
         }
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 60000)
     private void clearUnActiveToken(){
         Timestamp now = new Timestamp(System.currentTimeMillis());
-        System.out.println(11111);
         for (HashMap.Entry<BigInteger, Timestamp> entry : TokenActiveTime.entrySet()) {
             BigInteger key = entry.getKey();
             Timestamp value = entry.getValue();
-            if((now.getTime() - value.getTime()) > 5000){
+            if((now.getTime() - value.getTime()) > 50000){
                 removeToken(key);
             }
         }
