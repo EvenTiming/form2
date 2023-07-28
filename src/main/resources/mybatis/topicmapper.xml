@@ -4,7 +4,12 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eventiming.form2.DAO.topicDao">
 
-    <insert id="insertTopic" parameterType="com.eventiming.form2.pojo.topic">
+    <insert id="insertTopic" parameterType="com.eventiming.form2.pojo.topic" useGeneratedKeys="true" keyProperty="topicid">
+        insert into t_topic(title, userid, username, posttime, lastreplyedtime, lasteditedtime)
+        values (#{title}, #{userid}, #{username}, #{posttime}, #{lastreplyedtime}, #{lasteditedtime})
+    </insert>
+
+    <insert id="insertTopicObject" parameterType="com.eventiming.form2.pojo.topic" useGeneratedKeys="true" keyProperty="topicid">
         insert into t_topic(title, userid, username, posttime, lastreplyedtime, lasteditedtime)
         values (#{title}, #{userid}, #{username}, #{posttime}, #{lastreplyedtime}, #{lasteditedtime})
     </insert>

@@ -18,6 +18,7 @@ public interface topicDao {
                     Timestamp posttime,
                     Timestamp lastreplyedtime,
                     Timestamp lasteditedtime);
+    int insertTopicObject(topic t);
     int deleteTopic(BigInteger topicid);
 
     int updateTopicTitle(BigInteger Topicid,

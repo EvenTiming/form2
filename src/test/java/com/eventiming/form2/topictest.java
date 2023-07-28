@@ -3,6 +3,8 @@ package com.eventiming.form2;
 import com.eventiming.form2.DAO.postDao;
 import com.eventiming.form2.DAO.topicDao;
 import com.eventiming.form2.DAO.topiccontextDao;
+import com.eventiming.form2.Service.TopicService;
+import com.eventiming.form2.Service.TopicServiceImpl;
 import com.eventiming.form2.pojo.topiccontext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +66,14 @@ public class topictest {
         postdao.selectPostById(p);
         postdao.selectPostsByTopicId(topicid);
         postdao.selectPostsByUserId(userid);
+    }
+
+    @Autowired
+    private TopicServiceImpl topicService;
+    @Test
+    public void test4(){
+        String title = "hahahh";
+        BigInteger userid = new BigInteger("511751690528785776");
+//        topicService.createTopic(userid, title);
     }
 }
