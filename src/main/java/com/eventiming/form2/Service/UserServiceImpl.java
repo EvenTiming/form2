@@ -2,6 +2,8 @@ package com.eventiming.form2.Service;
 
 import com.eventiming.form2.DAO.userdao;
 import com.eventiming.form2.DAO.userstatusDao;
+import com.eventiming.form2.pojo.user;
+import com.eventiming.form2.pojo.userstatus;
 import com.eventiming.form2.util.UserIdGenerate;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,24 +33,63 @@ public class UserServiceImpl implements UserService {
                 return 2;
             }
         }catch (Exception e){
-            return 0;
+            return 3;
         }
         return 1;
     }
 
-    public int ChangeUserName(BigInteger userid, String newName) {
-        return 0;
+    public userstatus LoginByUserName(String username, String password){
+        user result = userd.selectUserByUsername(username);
+        if(result == null){
+            return null;
+        } else{
+            if(result.getPassword().equals(password)){
+                return userstatusdao.selectUserStatusById(result.getUserid());
+            } else{
+                return null;
+            }
+        }
+    }
+
+    public  userstatus LoginByEmail(String email, String password){
+        user result = userd.selectUserByEmail(email);
+        if(result == null){
+            return null;
+        } else{
+            if(result.getPassword().equals(password)){
+                return userstatusdao.selectUserStatusById(result.getUserid());
+            } else{
+                return null;
+            }
+        }
+    }
+
+    public int ChangeUserName( BigInteger userid, String newName) {
+        user result = userd.selectUserByUsername(newName);
+        if(result == null){
+            userd.updateUserNameById(userid, newName);
+            return 1;
+        }
+        return 2;
     }
 
     public int ChangePassword(BigInteger userid, String newPassword) {
-        return 0;
+        try {userd.updateUserPasswordByID(userid, newPassword);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
     }
 
     public int ChangeEmail(BigInteger userid, String newEmail) {
-        return 0;
+        user result = userd.selectUserByUsername(newEmail);
+        if(result == null){
+            userd.updateUserEmailById(userid, newEmail);
+            return 1;
+        }
+        return 2;
     }
-
     public String UserInfo(BigInteger userid) {
-        return null;
+        return userd.selectUserById(userid).toString();
     }
 }
