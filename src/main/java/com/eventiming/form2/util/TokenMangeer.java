@@ -12,17 +12,16 @@ import java.util.UUID;
 
 @Component
 public class TokenMangeer {
-
     private static HashMap<BigInteger, String> onlineToken;
-
     private static HashMap<BigInteger, Timestamp> TokenActiveTime;
-
     public TokenMangeer(){
         onlineToken =new HashMap<>();
         TokenActiveTime = new HashMap<>();
     }
-
     public String getToken(BigInteger userid){
+        if(onlineToken.containsKey(userid)){
+            return null;
+        }
         String token = tokenGenerate();
         onlineToken.put(userid, token);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -30,17 +29,17 @@ public class TokenMangeer {
         return token;
     }
 
-    public int confirmToken(BigInteger userid, String token){
+    public boolean confirmToken(BigInteger userid, String token){
         if(onlineToken.containsKey(userid)){
             if(onlineToken.get(userid).equals(token)){
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 TokenActiveTime.replace(userid,timestamp);
-                return 1;
+                return true;
             } else {
-                return 0;
+                return false;
             }
         }else{
-            return 0;
+            return false;
         }
     }
 

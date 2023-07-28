@@ -18,12 +18,12 @@ public interface UserService {
 
     ResponseData<userstatus> LoginByEmail(String email, String password);
 
-    int ChangeUserName(BigInteger userid , String newName);
+    ResponseData<Object>  ChangeUserName(BigInteger userid , String newName);
 
-    int ChangePassword(BigInteger userid , String newPassword);
+    ResponseData<Object> ChangePassword(BigInteger userid , String newPassword);
 
-    int ChangeEmail(BigInteger userid, String newEmail);
+    ResponseData<Object> ChangeEmail(BigInteger userid, String newEmail);
 
-    String UserInfo(BigInteger userid);
+    ResponseData<userstatus> UserInfo(BigInteger userid);
 
 }

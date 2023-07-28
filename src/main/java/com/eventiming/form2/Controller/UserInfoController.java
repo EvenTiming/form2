@@ -3,6 +3,9 @@ package com.eventiming.form2.Controller;
 import com.eventiming.form2.DAO.userdao;
 import com.eventiming.form2.DAO.userstatusDao;
 import com.eventiming.form2.Service.UserServiceImpl;
+import com.eventiming.form2.pojo.ResponseData;
+import com.eventiming.form2.pojo.userstatus;
+import com.eventiming.form2.util.TokenMangeer;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,40 +18,81 @@ import java.math.BigInteger;
 public class UserInfoController {
     @Autowired
     private userdao userd;
-
     @Autowired
     private userstatusDao userstatusdao;
-
     @Autowired
     private UserServiceImpl userService;
-
+    @Autowired
+    private TokenMangeer tokenMangeer;
     @PostMapping("/changeName")
-    public int changeName(@Param("userid")BigInteger userid, @Param("newusername") String newusername){
+    public ResponseData<Object> changeName(@Param("userid")BigInteger userid, @Param("newusername") String newusername,
+                          @Param("token") String token){
         if(userid.equals("")||newusername.equals("")){
-            return 0;
+            ResponseData<Object> responseData =new ResponseData<>();
+            responseData.setCode("400");
+            return responseData;
         }
+
+        if(!tokenMangeer.confirmToken(userid, token)){
+            ResponseData<Object> responseData =new ResponseData<>();
+            responseData.setCode("401");
+            return responseData;
+        }
+
         return userService.ChangeUserName(userid, newusername);
     }
 
     @PostMapping("/changeEmail")
-    public int changeEmail(@Param("userid")BigInteger userid, @Param("newemail") String newemail){
+    public ResponseData<Object> changeEmail(@Param("userid")BigInteger userid,
+                                            @Param("newemail") String newemail,
+                                            @Param("token") String token){
         if(userid.equals("")||newemail.equals("")){
-            return 0;
+            ResponseData<Object> responseData =new ResponseData<>();
+            responseData.setCode("400");
+            return responseData;
+        }
+
+        if(!tokenMangeer.confirmToken(userid, token)){
+            ResponseData<Object> responseData =new ResponseData<>();
+            responseData.setCode("401");
+            return responseData;
         }
         return userService.ChangeEmail(userid, newemail);
     }
 
     @PostMapping("/changePassword")
-    public int chagePassword(@Param("userid")BigInteger userid, @Param("newpassword") String newpassword){
+    public ResponseData<Object> chagePassword(@Param("userid")BigInteger userid,
+                                              @Param("newpassword") String newpassword,
+                                              @Param("token") String token){
         if(userid.equals("")||newpassword.equals("")){
-            return 0;
+            ResponseData<Object> responseData =new ResponseData<>();
+            responseData.setCode("400");
+            return responseData;
+        }
+
+        if(!tokenMangeer.confirmToken(userid, token)){
+            ResponseData<Object> responseData =new ResponseData<>();
+            responseData.setCode("401");
+            return responseData;
         }
         return userService.ChangePassword(userid, newpassword);
     }
 
     @GetMapping("/user")
-        public String userInfo(@Param("userid") BigInteger userid){
-            return userService.UserInfo(userid);
+        public ResponseData<userstatus> userInfo(@Param("userid") BigInteger userid,
+                                                 @Param("token") String token){
+        if(userid.equals("")||token.equals("")){
+            ResponseData<userstatus> responseData =new ResponseData<>();
+            responseData.setCode("400");
+            return responseData;
+        }
+
+        if(!tokenMangeer.confirmToken(userid, token)){
+            ResponseData<userstatus> responseData =new ResponseData<>();
+            responseData.setCode("401");
+            return responseData;
+        }
+        return userService.UserInfo(userid);
         }
 
 }

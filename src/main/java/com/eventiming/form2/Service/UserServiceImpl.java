@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     public int Register(String username, String password, String email) {
         try{
-            if(userd.selectUserByUsername(username) == null){
+            if(userd.selectUserByUsername(username) == null || userd.selectUserByEmail(email) == null){
                 BigInteger userid = userIdGenerate.generateUniqueId();
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 userd.insertUser(userid, username,password,email,timestamp);
@@ -81,32 +81,45 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public int ChangeUserName( BigInteger userid, String newName) {
+    public ResponseData<Object> ChangeUserName( BigInteger userid, String newName) {
         user result = userd.selectUserByUsername(newName);
+        ResponseData<Object> responseData = new ResponseData<>();
         if(result == null){
             userd.updateUserNameById(userid, newName);
-            return 1;
+            responseData.setCode("100");
+            return responseData;
         }
-        return 2;
+        responseData.setCode("501");
+        return responseData;
     }
 
-    public int ChangePassword(BigInteger userid, String newPassword) {
-        try {userd.updateUserPasswordByID(userid, newPassword);
-            return 1;
-        }catch (Exception e){
-            return 0;
+    public ResponseData<Object> ChangePassword(BigInteger userid, String newPassword) {
+        user result = userd.selectUserById(userid);
+        ResponseData<Object> responseData = new ResponseData<>();
+        if(result == null){
+            responseData.setCode("501");
+            return responseData;
         }
+        userd.updateUserPasswordByID(userid, newPassword);
+        responseData.setCode("100");
+        return responseData;
     }
 
-    public int ChangeEmail(BigInteger userid, String newEmail) {
+    public ResponseData<Object> ChangeEmail(BigInteger userid, String newEmail) {
         user result = userd.selectUserByUsername(newEmail);
+        ResponseData<Object> responseData = new ResponseData<>();
         if(result == null){
             userd.updateUserEmailById(userid, newEmail);
-            return 1;
+            responseData.setCode("100");
+            return responseData;
         }
-        return 2;
+        responseData.setCode("501");
+        return responseData;
     }
-    public String UserInfo(BigInteger userid) {
-        return userd.selectUserById(userid).toString();
+    public ResponseData<userstatus> UserInfo(BigInteger userid) {
+        ResponseData<userstatus> responseData = new ResponseData<>();
+        responseData.setCode("100");
+        responseData.setData(userstatusdao.selectUserStatusById(userid));
+        return responseData;
     }
 }

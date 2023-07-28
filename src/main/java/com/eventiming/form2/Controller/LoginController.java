@@ -32,8 +32,7 @@ public class LoginController {
             responseData.setCode("400");
             return responseData;
         }
-        ResponseData<userstatus> responseData = userService.LoginByUserName(username, password);
-        return  responseData;
+        return  userService.LoginByUserName(username, password);
     }
 
     @PostMapping("/loginByEmail")
@@ -43,7 +42,6 @@ public class LoginController {
             responseData.setCode("400");
             return responseData;
         }
-        ResponseData<userstatus> responseData = userService.LoginByEmail(email, password);
-        return  responseData;
+        return  userService.LoginByEmail(email, password);
     }
 }
