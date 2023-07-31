@@ -21,7 +21,7 @@ public interface topicDao {
     int insertTopicObject(topic t);
     int deleteTopic(BigInteger topicid);
 
-    int updateTopicTitle(BigInteger Topicid,
+    int updateTopicTitle(BigInteger topicid,
                          String newtitle);
 
     int updateTopicLastReplyedTime(BigInteger topicid,

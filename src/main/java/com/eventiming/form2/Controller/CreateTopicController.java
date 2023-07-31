@@ -32,5 +32,35 @@ public class CreateTopicController {
         }
         return 0;
     }
+
+    @PostMapping("/changetitle")
+    public int ChangeTitle(@Param("userid") BigInteger userid,
+                       @Param("topicid") BigInteger topicid,
+                       @Param("newtitle") String newtitle,
+                       @Param("token") String token){
+        if(topicid.equals("")||userid.toString().equals("")||token.equals("")||newtitle.equals("")){
+            return 0;
+        }
+        if(tokenMangeer.confirmToken(userid, token)){
+            return topicService.updateTopicTitleById(userid, topicid, newtitle);
+        }
+        return 0;
+    }
+
+    @PostMapping("/changecontext")
+    public int ChangeContext(@Param("userid") BigInteger userid,
+                             @Param("topicid") BigInteger topicid,
+                             @Param("newcontext") String newcontext,
+                             @Param("token" )String token
+                             ){
+        if(topicid.equals("")||userid.toString().equals("")||token.equals("")||newcontext.equals("")){
+            return 0;
+        }
+        if(tokenMangeer.confirmToken(userid, token)){
+            return topicService.updateTopicContextById(userid, topicid, newcontext);
+        }
+        return 0;
+    }
+
 }
 

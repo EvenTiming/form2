@@ -79,4 +79,34 @@ public class topictest {
         BigInteger userid = new BigInteger("511751690528785776");
 //        topicService.createTopic(userid, title);
     }
+
+    @Test
+    public void test5(){
+        for(int i = 0;i <20 ;i++){
+            String title = "test" +i;
+            String context = "test";
+            BigInteger userid = new BigInteger("1");
+            topicService.createTopic(userid, title, context);
+        }
+
+    }
+    @Test
+    public void test6(){
+        BigInteger user1 = new BigInteger("1");
+        BigInteger user2 = new BigInteger("2");
+        BigInteger topicid = new BigInteger("10");
+        BigInteger topicid2 = new BigInteger("11");
+//        topicService.deleteTopic(user1, topicid);
+//        topicService.deleteTopic(user2, topicid2);
+//        topicService.updateTopicTitleById(user1, topicid2, "newtitle");
+//        topicService.updateTopicContextById(user1, topicid2, "newcontext");
+//        System.out.println(topicService.selectTopicContextById(topicid2));
+//        System.out.println(topicService.selectTopicByUserId(user1));
+//        System.out.println(topicService.selectTopicByTitle("test"));
+        Timestamp t = new Timestamp(1);
+        System.out.println(topicService.selectTopicByEditedTime(t));
+        System.out.println(topicService.selectTopicByReplyedTime(t));
+
+
+    }
 }

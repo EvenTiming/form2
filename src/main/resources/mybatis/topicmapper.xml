@@ -19,7 +19,7 @@
     </delete>
 
     <update id="updateTopicTitle" parameterType="com.eventiming.form2.pojo.topic">
-        update t_topic set title = #{title} where topicid = #{topicid}
+        update t_topic set title = #{newtitle} where topicid = #{topicid}
     </update>
 
     <update id="updateTopicLastReplyedTime" parameterType="com.eventiming.form2.pojo.topic">
@@ -31,15 +31,15 @@
     </update>
 
     <select id="selectTopicByUser" resultType="com.eventiming.form2.pojo.topic">
-        select * from t_topic where userid = #{userid}
+        select topicid from t_topic where userid = #{userid}
     </select>
 
     <select id="selectTopicByTitle" resultType="com.eventiming.form2.pojo.topic">
-        select * from t_topic where title like concat('%', #{title}, '%')
+        select topicid from t_topic where title like concat('%', #{title}, '%')
     </select>
 
     <select id="selectTopicById" resultType="com.eventiming.form2.pojo.topic">
-        select * from t_topic where userid = #{userid}
+        select * from t_topic where topicid = #{topicid}
     </select>
 
     <select id="selectTopicByPostedTime" resultType="com.eventiming.form2.pojo.topic">
