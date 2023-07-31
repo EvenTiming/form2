@@ -50,4 +50,11 @@
         select * from t_topic where lasteditedtime > #{editedtime}
     </select>
 
+    <select id="selectIndexTopic" resultType="com.eventiming.form2.pojo.topic">
+        SELECT *
+        FROM t_topic
+        ORDER BY lastreplyedtime DESC
+        LIMIT #{num} OFFSET #{offset}
+    </select>
+
 </mapper>

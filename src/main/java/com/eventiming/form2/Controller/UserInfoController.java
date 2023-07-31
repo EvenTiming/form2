@@ -1,7 +1,5 @@
 package com.eventiming.form2.Controller;
 
-import com.eventiming.form2.DAO.userdao;
-import com.eventiming.form2.DAO.userstatusDao;
 import com.eventiming.form2.Service.UserServiceImpl;
 import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.userstatus;
@@ -16,10 +14,7 @@ import java.math.BigInteger;
 
 @RestController
 public class UserInfoController {
-    @Autowired
-    private userdao userd;
-    @Autowired
-    private userstatusDao userstatusdao;
+
     @Autowired
     private UserServiceImpl userService;
     @Autowired

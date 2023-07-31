@@ -1,5 +1,4 @@
 package com.eventiming.form2.Service;
-
 import com.eventiming.form2.DAO.userdao;
 import com.eventiming.form2.DAO.userstatusDao;
 import com.eventiming.form2.pojo.ResponseData;
@@ -122,4 +121,9 @@ public class UserServiceImpl implements UserService {
         responseData.setData(userstatusdao.selectUserStatusById(userid));
         return responseData;
     }
+
+   public int LogOut(BigInteger userid){
+        tokenMangeer.removeToken(userid);
+        return 1;
+   }
 }

@@ -26,4 +26,6 @@ public interface UserService {
 
     ResponseData<userstatus> UserInfo(BigInteger userid);
 
+    int LogOut(BigInteger userid);
+
 }

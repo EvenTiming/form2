@@ -54,7 +54,7 @@ public class TokenMangeer {
             }
         }
     }
-    private void removeToken(BigInteger userid){
+    public void removeToken(BigInteger userid){
         onlineToken.remove(userid);
         TokenActiveTime.remove(userid);
     }

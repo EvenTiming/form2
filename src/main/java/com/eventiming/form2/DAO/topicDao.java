@@ -36,9 +36,6 @@ public interface topicDao {
 
     List<topic> selectTopicByPostedTime(Timestamp posttime);
     List<topic> selectTopicByEditedTime(Timestamp editedtime);
-
-
-
-
+    List<topic> selectIndexTopic(int num, int offect);
 
 }

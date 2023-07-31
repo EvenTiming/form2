@@ -1,16 +1,15 @@
 package com.eventiming.form2.Service;
 
-import com.eventiming.form2.DAO.topicDao;
-import com.eventiming.form2.DAO.topiccontextDao;
-import com.eventiming.form2.DAO.userdao;
-import com.eventiming.form2.DAO.userstatusDao;
+import com.eventiming.form2.DAO.*;
 import com.eventiming.form2.pojo.ResponseData;
+import com.eventiming.form2.pojo.post;
 import com.eventiming.form2.pojo.topic;
 import com.eventiming.form2.pojo.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,6 +25,9 @@ public class TopicServiceImpl implements TopicService{
 
     @Autowired
     private userstatusDao userstatusdao;
+
+    @Autowired
+    private postDao postdao;
 
     public int createTopic(BigInteger userid, String title, String context){
         user u = userd.selectUserById(userid);
@@ -83,55 +85,49 @@ public class TopicServiceImpl implements TopicService{
         responseData.setCode("200");
         return responseData;
     }
-    public ResponseData<String> selectTopicContextById(BigInteger topicid){
-       ResponseData<String> responseData =new ResponseData<>();
-       String t =topiccontextdao.selectContext(topicid);
+    public ResponseData<List<post>> selectTopicContextById(BigInteger topicid){
+        ResponseData<List<post>> responseData =new ResponseData<>();
+        String t =topiccontextdao.selectContext(topicid);
        if(t!=null){
            responseData.setCode("100");
-           responseData.setData(t);
+           HashMap<String, String> map = new HashMap<>();
+           map.put("context", t);
+           responseData.setData(postdao.selectPostsByTopicId(topicid));
            return responseData;
        }
         responseData.setCode("200");
         return responseData;
     }
     public ResponseData<List<topic>> selectTopicByUserId(BigInteger userid){
-        ResponseData<List<topic>> responseData =new ResponseData<>();
-        List<topic> list = topicDao.selectTopicByUser(userid);
-        if(!list.isEmpty()){
-            responseData.setCode("100");
-            responseData.setData(list);
-            return responseData;
-        }
-        responseData.setCode("200");
-        return responseData;
 
+        List<topic> list = topicDao.selectTopicByUser(userid);
+        return Response(list);
     }
     public ResponseData<List<topic>> selectTopicByTitle(String title){
-        ResponseData<List<topic>> responseData =new ResponseData<>();
+
         List<topic> list = topicDao.selectTopicByTitle(title);
-        if(!list.isEmpty()){
-            responseData.setCode("100");
-            responseData.setData(list);
-            return responseData;
-        }
-        responseData.setCode("200");
-        return responseData;
+        return Response(list);
+
     }
 
     public ResponseData<List<topic>> selectTopicByReplyedTime(Timestamp timestamp){
-        ResponseData<List<topic>> responseData =new ResponseData<>();
+
         List<topic> list = topicDao.selectTopicByPostedTime(timestamp);
-        if(!list.isEmpty()){
-            responseData.setCode("100");
-            responseData.setData(list);
-            return responseData;
-        }
-        responseData.setCode("200");
-        return responseData;
+        return Response(list);
     }
     public ResponseData<List<topic>> selectTopicByEditedTime(Timestamp timestamp){
-        ResponseData<List<topic>> responseData =new ResponseData<>();
         List<topic> list = topicDao.selectTopicByEditedTime(timestamp);
+        return Response(list);
+
+    }
+
+    public ResponseData<List<topic>> selectIndexTopics(int num, int offset){
+
+        List<topic> list = topicDao.selectIndexTopic(num,offset);
+        return Response(list);
+    }
+    private ResponseData<List<topic>> Response( List<topic> list){
+        ResponseData<List<topic>> responseData =new ResponseData<>();
         if(!list.isEmpty()){
             responseData.setCode("100");
             responseData.setData(list);
@@ -140,4 +136,5 @@ public class TopicServiceImpl implements TopicService{
         responseData.setCode("200");
         return responseData;
     }
+
 }
