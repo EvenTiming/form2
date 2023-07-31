@@ -2,8 +2,6 @@ package com.eventiming.form2;
 
 import com.eventiming.form2.DAO.userdao;
 import com.eventiming.form2.DAO.userstatusDao;
-import com.eventiming.form2.pojo.user;
-import com.eventiming.form2.util.UserIdGenerate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +15,6 @@ class userstatusteset {
     private userdao ud;
     @Autowired
     private userstatusDao usdao;
-    @Autowired
-    private UserIdGenerate uig;
 
     String username = "testname2";
     String password = "testpassword";
@@ -26,14 +22,14 @@ class userstatusteset {
     String email = "testemail";
 
 
-    @Test
-    public void insertuser(){
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        BigInteger userid = uig.generateUniqueId();
-        ud.insertUser(userid, username, password, email, timestamp);
-        usdao.insertUserStatus(userid, 1, timestamp, 0,0);
-
-    }
+//    @Test
+//    public void insertuser(){
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//        BigInteger userid = uig.generateUniqueId();
+//        ud.insertUser(userid, username, password, email, timestamp);
+//        usdao.insertUserStatus(userid, 1, timestamp, 0,0);
+//
+//    }
 
     @Test
     public void testUser(){

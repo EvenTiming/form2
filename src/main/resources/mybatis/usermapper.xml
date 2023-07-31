@@ -44,6 +44,11 @@
         values(#{userid}, #{username}, #{password}, #{email}, #{registertime})
     </insert>
 
+    <insert id = "insertUserObject"  useGeneratedKeys="true" keyProperty="userid">
+        insert into t_user(username, password, email, registertime)
+        values(#{username}, #{password}, #{email}, #{registertime})
+    </insert>
+
     <delete id="deleteUserById">
         DELETE FROM t_user WHERE userid = #{userid}
     </delete>

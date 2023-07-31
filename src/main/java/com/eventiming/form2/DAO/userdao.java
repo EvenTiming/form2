@@ -16,6 +16,8 @@ public interface userdao {
     int insertUser(BigInteger userid, String username, String password,
                    String email, Timestamp registertime);
 
+    int insertUserObject(user u);
+
 //  1. 根据用户名返回密码
     String selectUserPasswordByUsername(String username);
 //	2. 根据用户邮箱返回密码

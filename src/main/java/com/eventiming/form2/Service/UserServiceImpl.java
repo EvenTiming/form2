@@ -6,14 +6,11 @@ import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.user;
 import com.eventiming.form2.pojo.userstatus;
 import com.eventiming.form2.util.TokenMangeer;
-import com.eventiming.form2.util.UserIdGenerate;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.HashMap;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,18 +18,21 @@ public class UserServiceImpl implements UserService {
     private userdao userd;
     @Autowired
     private userstatusDao userstatusdao;
-    @Autowired
-    private UserIdGenerate userIdGenerate;
+
     @Autowired
     private TokenMangeer tokenMangeer;
 
     public int Register(String username, String password, String email) {
         try{
             if(userd.selectUserByUsername(username) == null || userd.selectUserByEmail(email) == null){
-                BigInteger userid = userIdGenerate.generateUniqueId();
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                userd.insertUser(userid, username,password,email,timestamp);
-                userstatusdao.insertUserStatus(userid,1,timestamp,0,0);
+                user u =new user();
+                u.setEmail(email);
+                u.setPassword(password);
+                u.setUsername(username);
+                u.setRegistertime(timestamp);
+                userd.insertUserObject(u);
+                userstatusdao.insertUserStatus(u.getUserid(),1,timestamp,0,0);
             }
             else {
                 return 2;

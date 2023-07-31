@@ -21,11 +21,11 @@ public class topictest {
 
 
     @Test
-    public void test(){
+    public void test() {
         String title = "123";
         BigInteger userid = new BigInteger("123123");
         String username = "wzq";
-        Timestamp timestamp =new Timestamp(1111);
+        Timestamp timestamp = new Timestamp(1111);
         Timestamp posttime = timestamp;
         Timestamp lastreplyedtime = timestamp;
         Timestamp lasteditedtime = timestamp;
@@ -42,8 +42,9 @@ public class topictest {
 
     @Autowired
     private topiccontextDao topictext;
+
     @Test
-    public void test2(){
+    public void test2() {
         BigInteger userid = new BigInteger("1");
         //topictext.insertContext(userid,"1313123");
 //        topictext.selectContext(userid);
@@ -54,12 +55,13 @@ public class topictest {
 
     @Autowired
     private postDao postdao;
+
     @Test
-    public void test3(){
-        BigInteger topicid =new BigInteger("123");
+    public void test3() {
+        BigInteger topicid = new BigInteger("123");
         BigInteger userid = new BigInteger("1233");
         String postcontext = "hhhh";
-        BigInteger p =new BigInteger("1");
+        BigInteger p = new BigInteger("1");
         Timestamp timestamp = new Timestamp(1111);
         postdao.insertPost(topicid, userid, postcontext, timestamp);
         postdao.updatePost(topicid, "222222");
@@ -70,8 +72,9 @@ public class topictest {
 
     @Autowired
     private TopicServiceImpl topicService;
+
     @Test
-    public void test4(){
+    public void test4() {
         String title = "hahahh";
         BigInteger userid = new BigInteger("511751690528785776");
 //        topicService.createTopic(userid, title);
