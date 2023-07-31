@@ -3,6 +3,7 @@ package com.eventiming.form2.Service;
 import com.eventiming.form2.DAO.topicDao;
 import com.eventiming.form2.DAO.topiccontextDao;
 import com.eventiming.form2.DAO.userdao;
+import com.eventiming.form2.DAO.userstatusDao;
 import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.topic;
 import com.eventiming.form2.pojo.user;
@@ -17,10 +18,16 @@ import java.util.List;
 public class TopicServiceImpl implements TopicService{
     @Autowired
     private userdao userd;
+
     @Autowired
     private topicDao topicDao;
+
     @Autowired
     private topiccontextDao topiccontextdao;
+
+    @Autowired
+    private userstatusDao userstatusdao;
+
     public int createTopic(BigInteger userid, String title, String context){
         user u = userd.selectUserById(userid);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -32,8 +39,8 @@ public class TopicServiceImpl implements TopicService{
         t.setPosttime(timestamp);
         t.setLasteditedtime(timestamp);
         topicDao.insertTopicObject(t);
-//        System.out.println(t.getTopicid());
         topiccontextdao.insertContext(t.getTopicid(),context);
+        userstatusdao.updateUserTopicNum(userid, timestamp);
         return 1;
 
     }

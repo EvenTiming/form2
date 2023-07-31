@@ -69,14 +69,14 @@
 
     <update id="updateUserTopicNum">
         update t_userstatus
-        set ${topicnum} = ${topicnum} + 1,
-            lastactivetime = #{timestamp}
+        set lastactivetime = #{timestamp},
+            topicnum = topicnum + 1
         where userid = #{userid}
     </update>
 
     <update id="updateUserThreadNum">
         update t_userstatus
-        set ${threadnum} = ${threadnum} + 1,
+        set threadnum = threadnum + 1,
         lastactivetime = #{timestamp}
         where userid = #{userid}
     </update>
