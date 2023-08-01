@@ -25,4 +25,7 @@ public class PostController {
             return postService.addpost(userid, topicid, postcontext);
         return 0;
     }
+
+    // TODO 回复post
+    // TODO 筛选排序post
 }

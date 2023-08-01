@@ -1,18 +1,14 @@
 package com.eventiming.form2.Controller;
 
-import com.eventiming.form2.Service.TopicService;
 import com.eventiming.form2.Service.TopicServiceImpl;
 import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.post;
 import com.eventiming.form2.pojo.topic;
-import com.eventiming.form2.pojo.topiccontext;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.math.BigInteger;
 import java.util.List;
 

@@ -7,4 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
 // TODO 更新管理员功能，不同权限的用户操作仍需设计
+
+    // 封禁用户
+
+    // 删除帖子
+
+    // 删除回复
 }

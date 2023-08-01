@@ -4,6 +4,7 @@ import com.eventiming.form2.DAO.userstatusDao;
 import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.user;
 import com.eventiming.form2.pojo.userstatus;
+import com.eventiming.form2.util.Password2SHA;
 import com.eventiming.form2.util.TokenMangeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private TokenMangeer tokenMangeer;
 
+    @Autowired
+    private Password2SHA password2SHA;
+
+
     public int Register(String username, String password, String email) {
         try{
             if(userd.selectUserByUsername(username) == null || userd.selectUserByEmail(email) == null){
+                password = password2SHA.hashPassword(password);
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 user u =new user();
                 u.setEmail(email);
@@ -43,6 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseData<userstatus> LoginByUserName(String username, String password){
+        password = password2SHA.hashPassword(password);
         ResponseData<userstatus> responseData =new ResponseData<userstatus>();
         user result = userd.selectUserByUsername(username);
         if(result == null){
@@ -62,6 +69,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseData<userstatus> LoginByEmail(String email, String password){
+        password = password2SHA.hashPassword(password);
         ResponseData<userstatus> responseData =new ResponseData<userstatus>();
         user result = userd.selectUserByEmail(email);
         if(result == null){
@@ -93,6 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseData<Object> ChangePassword(BigInteger userid, String newPassword) {
+        newPassword = password2SHA.hashPassword(newPassword);
         user result = userd.selectUserById(userid);
         ResponseData<Object> responseData = new ResponseData<>();
         if(result == null){

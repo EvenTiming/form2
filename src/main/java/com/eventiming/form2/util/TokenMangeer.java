@@ -1,10 +1,7 @@
 package com.eventiming.form2.util;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.HashMap;
