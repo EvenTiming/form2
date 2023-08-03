@@ -7,7 +7,7 @@ import java.math.BigInteger;
 @Component
 public class TopicSequence {
 
-    //TODO LRU双链表实现
+    //TODO LRU待检查
     private final int MAX_SPACE_NUM = 20;
     private int size;
     private TopicAndContext head ;
