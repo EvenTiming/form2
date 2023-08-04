@@ -1,14 +1,16 @@
 package com.eventiming.form2.Service;
 
 import com.eventiming.form2.DAO.*;
-import com.eventiming.form2.pojo.ResponseData;
-import com.eventiming.form2.pojo.post;
-import com.eventiming.form2.pojo.topic;
-import com.eventiming.form2.pojo.user;
+import com.eventiming.form2.pojo.*;
+import com.eventiming.form2.util.BeforeTimeStamp;
+import com.eventiming.form2.util.Cache.PostHashMap;
+import com.eventiming.form2.util.Cache.TopicAndContext;
+import com.eventiming.form2.util.Cache.TopicCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -27,6 +29,29 @@ public class TopicServiceImpl implements TopicService{
 
     @Autowired
     private postDao postdao;
+
+    @Autowired
+    private postinfoDao postinfodao;
+
+    @Autowired
+    private TopicCache topicCache;
+
+    @Autowired
+    private BeforeTimeStamp beforeTimeStamp;
+
+    public TopicServiceImpl(){
+        Timestamp time = beforeTimeStamp.getTime(72);
+        List<topic> topics = topicDao.selectTopicByEditedTime(time);
+        Iterator<topic> iterator = topics.iterator();
+        while(iterator.hasNext()){
+            topic current = iterator.next();
+            long topicid = current.getTopicid();
+            String context = topiccontextdao.selectContext(topicid);
+            PostHashMap postHashMap = getPostsByTopicId(topicid);
+            TopicAndContext topicAndContext =new TopicAndContext(current, context, postHashMap);
+            topicCache.addTopicAndContext(topicAndContext);
+        }
+    }
 
     public int createTopic(long userid, String title, String context){
         user u = userd.selectUserById(userid);
@@ -134,6 +159,19 @@ public class TopicServiceImpl implements TopicService{
         }
         responseData.setCode("200");
         return responseData;
+    }
+
+    private PostHashMap getPostsByTopicId(long topicid){
+        List<post> posts = postdao.selectPostsByTopicId(topicid);
+        Iterator<post> postIterator = posts.iterator();
+        // TODO 初始化缓冲层
+        PostHashMap postHashMap = new PostHashMap();
+        while(postIterator.hasNext()){
+            post postcurrent =postIterator.next();
+            fastpost fp =new fastpost(postcurrent,postinfodao.selectPostInfoByID(postcurrent.getPostid()));
+            postHashMap.addpostTree(fp);
+        }
+        return postHashMap;
     }
 
 }

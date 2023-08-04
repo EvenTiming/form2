@@ -18,7 +18,7 @@ public class TopicSequence {
 
     }
 
-    public void addTopicAndContext(topic t, topiccontext tc,  PostHashMap postHashMap){
+    public void addTopicAndContext(topic t, String tc,  PostHashMap postHashMap){
         TopicAndContext topicAndContext = new TopicAndContext(t, tc, postHashMap);
         if(size <= MAX_SPACE_NUM){
             tail.setNext(topicAndContext);

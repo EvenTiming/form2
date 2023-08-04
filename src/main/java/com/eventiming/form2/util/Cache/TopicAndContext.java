@@ -7,7 +7,7 @@ import com.eventiming.form2.pojo.topiccontext;
 
 public class TopicAndContext{
     private topic t;
-    private topiccontext tc;
+    private String tc;
     private PostHashMap postHashMap;
 
     public long topicid;
@@ -39,11 +39,11 @@ public class TopicAndContext{
         this.t = t;
     }
 
-    public topiccontext getTc() {
+    public String getTc() {
         return tc;
     }
 
-    public void setTc(topiccontext tc) {
+    public void setTc(String tc) {
         this.tc = tc;
     }
 
@@ -55,7 +55,7 @@ public class TopicAndContext{
         this.postHashMap = postHashMap;
     }
 
-    public TopicAndContext(topic t, topiccontext tc,PostHashMap postHashMap){
+    public TopicAndContext(topic t, String tc,PostHashMap postHashMap){
         super();
         this.t = t;
         this.tc =tc;

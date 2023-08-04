@@ -19,7 +19,6 @@ public interface TopicService {
     ResponseData<List<topic>> selectTopicByTitle(String title);
     ResponseData<List<topic>> selectTopicByReplyedTime(Timestamp timestamp);
     ResponseData<List<topic>> selectTopicByEditedTime(Timestamp timestamp);
-
     ResponseData<List<topic>> selectIndexTopics(int num, int offset);
 
 }
