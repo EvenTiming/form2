@@ -11,5 +11,16 @@ public class topicinfo {
     private long topicid;
     private long likenum;
     private long storenum;
-    private long ward;
+
+    @Override
+    public String toString() {
+        return "topicinfo{" +
+                "topicid=" + topicid +
+                ", likenum=" + likenum +
+                ", storenum=" + storenum +
+                ", forward=" + forward +
+                '}';
+    }
+
+    private long forward;
 }

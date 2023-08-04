@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- t_topicinfo.xml -->
+
+<mapper namespace="com.eventiming.form2.DAO.topicinfoDao">
+
+    <insert id="insertTopicInfo" parameterType="long" useGeneratedKeys="false">
+        INSERT INTO t_topicinfo (topicid, likenum, storenum, forward)
+        VALUES (#{topicid}, 0,  0,  0)
+    </insert>
+
+    <delete id="deleteTopicInfo" parameterType="long">
+        DELETE FROM t_topicinfo
+        WHERE topicid = #{topicid}
+    </delete>
+
+    <select id="selectTopicNumByID" parameterType="long" resultType="com.eventiming.form2.pojo.topicinfo">
+        SELECT *
+        FROM t_topicinfo
+        WHERE topicid = #{topicid}
+    </select>
+
+    <update id="updateTopicNumByID" parameterType="map">
+        UPDATE t_topicinfo
+        SET likenum = #{likenum},
+        storenum = #{storenum},
+        forward = #{forward}
+        WHERE topicid = #{topicid}
+    </update>
+
+</mapper>
+
