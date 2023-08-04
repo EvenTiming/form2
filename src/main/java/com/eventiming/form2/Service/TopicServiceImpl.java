@@ -39,19 +39,6 @@ public class TopicServiceImpl implements TopicService{
     @Autowired
     private BeforeTimeStamp beforeTimeStamp;
 
-    public TopicServiceImpl(){
-        Timestamp time = beforeTimeStamp.getTime(72);
-        List<topic> topics = topicDao.selectTopicByEditedTime(time);
-        Iterator<topic> iterator = topics.iterator();
-        while(iterator.hasNext()){
-            topic current = iterator.next();
-            long topicid = current.getTopicid();
-            String context = topiccontextdao.selectContext(topicid);
-            PostHashMap postHashMap = getPostsByTopicId(topicid);
-            TopicAndContext topicAndContext =new TopicAndContext(current, context, postHashMap);
-            topicCache.addTopicAndContext(topicAndContext);
-        }
-    }
 
     public int createTopic(long userid, String title, String context){
         user u = userd.selectUserById(userid);

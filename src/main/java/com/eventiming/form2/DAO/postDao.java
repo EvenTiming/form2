@@ -14,6 +14,7 @@ public interface postDao {
                    long userid,
                    String postcontext,
                    Timestamp timestamp);
+    int insertPostObj(post p);
     int deletePostById(long postid);
     int updatePost(long postid , String postcontext);
     post selectPostById(long postid);

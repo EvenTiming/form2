@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TopicSequence {
-    //TODO LRU待检查
+    //暂时弃用，使用java自带的collection
     private final int MAX_SPACE_NUM = 20;
     private int size;
     private TopicAndContext head ;

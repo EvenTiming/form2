@@ -8,6 +8,10 @@
         insert into t_post(topicid, userid, postcontext, posttime)
         values(#{topicid}, #{userid}, #{postcontext}, #{timestamp})
     </insert>
+    <insert id="insertPostObj" useGeneratedKeys="true" keyProperty="postid">
+        insert into t_post(topicid, userid, postcontext, posttime)
+        values(#{topicid}, #{userid}, #{postcontext}, #{timestamp})
+    </insert>
 
     <delete id="deletePostById">
         delete from t_post where postid = #{postid}
