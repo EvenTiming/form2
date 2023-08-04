@@ -9,8 +9,6 @@ import com.eventiming.form2.pojo.topiccontext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.math.BigInteger;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -23,7 +21,7 @@ public class topictest {
     @Test
     public void test() {
         String title = "123";
-        BigInteger userid = new BigInteger("123123");
+        long userid = 123123;
         String username = "wzq";
         Timestamp timestamp = new Timestamp(1111);
         Timestamp posttime = timestamp;
@@ -45,7 +43,7 @@ public class topictest {
 
     @Test
     public void test2() {
-        BigInteger userid = new BigInteger("1");
+        long userid = 1;
         //topictext.insertContext(userid,"1313123");
 //        topictext.selectContext(userid);
 //        topictext.updateContext(userid, "hhhhhh");
@@ -58,10 +56,10 @@ public class topictest {
 
     @Test
     public void test3() {
-        BigInteger topicid = new BigInteger("123");
-        BigInteger userid = new BigInteger("1233");
+        long topicid = 123;
+        long userid = 1233;
         String postcontext = "hhhh";
-        BigInteger p = new BigInteger("1");
+        long p = 1;
         Timestamp timestamp = new Timestamp(1111);
         postdao.insertPost(topicid, userid, postcontext, timestamp);
         postdao.updatePost(topicid, "222222");
@@ -76,7 +74,7 @@ public class topictest {
     @Test
     public void test4() {
         String title = "hahahh";
-        BigInteger userid = new BigInteger("511751690528785776");
+        long userid = 5117;
 //        topicService.createTopic(userid, title);
     }
 
@@ -85,17 +83,17 @@ public class topictest {
         for(int i = 0;i <20 ;i++){
             String title = "test" +i;
             String context = "test";
-            BigInteger userid = new BigInteger("1");
+            long userid = 1;
             topicService.createTopic(userid, title, context);
         }
 
     }
     @Test
     public void test6(){
-        BigInteger user1 = new BigInteger("1");
-        BigInteger user2 = new BigInteger("2");
-        BigInteger topicid = new BigInteger("10");
-        BigInteger topicid2 = new BigInteger("11");
+        long user1 = 1;
+        long user2 = 2;
+        long topicid = 10;
+        long topicid2 = 11;
 //        topicService.deleteTopic(user1, topicid);
 //        topicService.deleteTopic(user2, topicid2);
 //        topicService.updateTopicTitleById(user1, topicid2, "newtitle");

@@ -6,7 +6,7 @@ import com.eventiming.form2.pojo.userstatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
+
 import java.sql.Timestamp;
 
 
@@ -18,14 +18,14 @@ public interface UserService {
 
     ResponseData<userstatus> LoginByEmail(String email, String password);
 
-    ResponseData<Object>  ChangeUserName(BigInteger userid , String newName);
+    ResponseData<Object>  ChangeUserName(long userid , String newName);
 
-    ResponseData<Object> ChangePassword(BigInteger userid , String newPassword);
+    ResponseData<Object> ChangePassword(long userid , String newPassword);
 
-    ResponseData<Object> ChangeEmail(BigInteger userid, String newEmail);
+    ResponseData<Object> ChangeEmail(long userid, String newEmail);
 
-    ResponseData<userstatus> UserInfo(BigInteger userid);
+    ResponseData<userstatus> UserInfo(long userid);
 
-    int LogOut(BigInteger userid);
+    int LogOut(long userid);
 
 }

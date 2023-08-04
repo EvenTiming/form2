@@ -27,21 +27,21 @@
     </update>
 
     <!-- 4. 返回符合话题数量范围的用户id -->
-    <select id="selectUserIdByTopicNum" resultType="BigInteger">
+    <select id="selectUserIdByTopicNum" resultType="long">
         SELECT userid
         FROM t_userstatus
         WHERE topicnum BETWEEN #{min} AND #{max}
     </select>
 
     <!-- 5. 返回符合回复数量范围的用户id -->
-    <select id="selectUserIdByThreadNum" resultType="BigInteger">
+    <select id="selectUserIdByThreadNum" resultType="long">
         SELECT userid
         FROM t_userstatus
         WHERE threadnum BETWEEN #{min} AND #{max}
     </select>
 
     <!-- 6. 返回话题数量前num名的用户id -->
-    <select id="selectUserIdBytopTopicNum" resultType="BigInteger">
+    <select id="selectUserIdBytopTopicNum" resultType="long">
         SELECT userid
         FROM t_userstatus
         ORDER BY topicnum DESC
@@ -49,7 +49,7 @@
     </select>
 
     <!-- 7. 返回回复数量前num名的用户id -->
-    <select id="selectUserIdBytopThreadNum" resultType="BigInteger">
+    <select id="selectUserIdBytopThreadNum" resultType="long">
         SELECT userid
         FROM t_userstatus
         ORDER BY threadnum DESC

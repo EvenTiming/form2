@@ -3,14 +3,14 @@ package com.eventiming.form2.util.Cache;
 import com.eventiming.form2.pojo.topic;
 import com.eventiming.form2.pojo.topiccontext;
 
-import java.math.BigInteger;
+
 
 public class TopicAndContext{
     private topic t;
     private topiccontext tc;
     private PostHashMap postHashMap;
 
-    public BigInteger topicid;
+    public long topicid;
 
     public TopicAndContext getNext() {
         return next;
@@ -61,7 +61,7 @@ public class TopicAndContext{
         this.tc =tc;
         this.postHashMap = postHashMap;
         if(t == null ){
-            this.topicid = null;
+            this.topicid = 0;
         }else{
             this.topicid = t.getTopicid();
         }

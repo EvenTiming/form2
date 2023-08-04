@@ -4,7 +4,7 @@ import com.eventiming.form2.pojo.topic;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
@@ -13,26 +13,26 @@ import java.util.List;
 @Repository
 public interface topicDao {
     int insertTopic(String title,
-                    BigInteger userid,
+                    long userid,
                     String username,
                     Timestamp posttime,
                     Timestamp lastreplyedtime,
                     Timestamp lasteditedtime);
     int insertTopicObject(topic t);
-    int deleteTopic(BigInteger topicid);
+    int deleteTopic(long topicid);
 
-    int updateTopicTitle(BigInteger topicid,
+    int updateTopicTitle(long topicid,
                          String newtitle);
 
-    int updateTopicLastReplyedTime(BigInteger topicid,
+    int updateTopicLastReplyedTime(long topicid,
                                    Timestamp timestamp);
 
-    int updateTopicLastEditedTime(BigInteger topicid,
+    int updateTopicLastEditedTime(long topicid,
                                   Timestamp timestamp);
 
-    List<topic> selectTopicByUser(BigInteger userid);
+    List<topic> selectTopicByUser(long userid);
     List<topic> selectTopicByTitle(String title);
-    topic selectTopicById(BigInteger topicid);
+    topic selectTopicById(long topicid);
 
     List<topic> selectTopicByPostedTime(Timestamp posttime);
     List<topic> selectTopicByEditedTime(Timestamp editedtime);

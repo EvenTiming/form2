@@ -4,16 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigInteger;
+
 import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class topic {
-    BigInteger topicid;
+    long topicid;
     String title;
-    BigInteger userid;
+    long userid;
     String username;
     Timestamp posttime;
     Timestamp lastreplyedtime;

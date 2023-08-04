@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
 
 @RestController
 public class CreateTopicController {
@@ -21,10 +20,10 @@ public class CreateTopicController {
     private TokenMangeer tokenMangeer;
     @PostMapping("/create")
     public int CreateTopic(@Param("title") String title,
-                           @Param("userid") BigInteger userid,
+                           @Param("userid") long userid,
                            @Param("context") String context,
                            @Param("token") String token){
-        if(title.equals("")||userid.toString().equals("")||context.equals("")){
+        if(title.equals("")|(""+userid).equals("")||context.equals("")){
             return 0;
         }
         if(tokenMangeer.confirmToken(userid, token)){
@@ -34,11 +33,11 @@ public class CreateTopicController {
     }
 
     @PostMapping("/changetitle")
-    public int ChangeTitle(@Param("userid") BigInteger userid,
-                       @Param("topicid") BigInteger topicid,
+    public int ChangeTitle(@Param("userid") long userid,
+                       @Param("topicid") long topicid,
                        @Param("newtitle") String newtitle,
                        @Param("token") String token){
-        if(topicid.equals("")||userid.toString().equals("")||token.equals("")||newtitle.equals("")){
+        if((""+topicid).equals("")||(""+userid).equals("")||token.equals("")||newtitle.equals("")){
             return 0;
         }
         if(tokenMangeer.confirmToken(userid, token)){
@@ -48,12 +47,12 @@ public class CreateTopicController {
     }
 
     @PostMapping("/changecontext")
-    public int ChangeContext(@Param("userid") BigInteger userid,
-                             @Param("topicid") BigInteger topicid,
+    public int ChangeContext(@Param("userid") long userid,
+                             @Param("topicid") long topicid,
                              @Param("newcontext") String newcontext,
                              @Param("token" )String token
                              ){
-        if(topicid.equals("")||userid.toString().equals("")||token.equals("")||newcontext.equals("")){
+        if((""+topicid).equals("")||(""+userid).equals("")||token.equals("")||newcontext.equals("")){
             return 0;
         }
         if(tokenMangeer.confirmToken(userid, token)){

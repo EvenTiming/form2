@@ -3,10 +3,9 @@ package com.eventiming.form2.util.Cache;
 import com.eventiming.form2.pojo.topic;
 import com.eventiming.form2.pojo.topiccontext;
 import org.springframework.stereotype.Component;
-import java.math.BigInteger;
+
 @Component
 public class TopicSequence {
-
     //TODO LRU待检查
     private final int MAX_SPACE_NUM = 20;
     private int size;
@@ -32,7 +31,7 @@ public class TopicSequence {
         }
     }
 
-    public TopicAndContext visitNode(BigInteger topicid){
+    public TopicAndContext visitNode(long topicid){
         TopicAndContext topicAndContext = findNode(topicid);
         if(topicAndContext == null)
             return topicAndContext;
@@ -59,14 +58,14 @@ public class TopicSequence {
         }
     }
 
-    public TopicAndContext findNode(BigInteger topicid){
+    public TopicAndContext findNode(long topicid){
             TopicAndContext point = head;
             if(point == tail){
                 return null;
             }
             point = point.getNext();
             while(point != null){
-                if(point.topicid.equals(topicid)){
+                if(point.topicid == topicid){
                     return point;
                 }
                 point = point.getNext();

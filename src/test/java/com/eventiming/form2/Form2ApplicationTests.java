@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.math.BigInteger;
+
 import java.sql.Timestamp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,10 +18,10 @@ class Form2ApplicationTests {
 	@Test
 	void testUseradd(){
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		BigInteger bigInteger = new BigInteger("12313");
-
-		ud.insertUser(bigInteger,"eventime", "123@qq.com",
-				"123@email.com", timestamp);
+//		long = new long("12313");
+//
+//		ud.insertUser(long,"eventime", "123@qq.com",
+//				"123@email.com", timestamp);
 	}
 	@Test
 	public void testSelectUserPasswordByUsername() {

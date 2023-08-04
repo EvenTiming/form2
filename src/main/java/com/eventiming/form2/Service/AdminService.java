@@ -1,10 +1,8 @@
 package com.eventiming.form2.Service;
 
-import java.math.BigInteger;
-
 public interface AdminService {
-    int blockUser(BigInteger userid);
-    int deleteUser(BigInteger userid);
-    int deleteTopic(BigInteger topicid);
-    int deletePost(BigInteger postid);
+    int blockUser(long userid);
+    int deleteUser(long userid);
+    int deleteTopic(long topicid);
+    int deletePost(long postid);
 }

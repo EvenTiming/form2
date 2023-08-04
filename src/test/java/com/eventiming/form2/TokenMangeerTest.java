@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.PushbackReader;
-import java.math.BigInteger;
+
 
 
 @SpringBootTest
@@ -17,7 +17,7 @@ public class TokenMangeerTest {
     private TokenMangeer tokenMangeer;
     @Test
     public void test() throws InterruptedException {
-        BigInteger userid = new BigInteger("123123132");
+        long userid = 123123132;
         String token = tokenMangeer.getToken(userid);
         System.out.println(token);
         System.out.println(tokenMangeer.confirmToken(userid, token));

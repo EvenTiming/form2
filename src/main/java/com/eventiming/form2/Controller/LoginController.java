@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
-
 @RestController
 public class LoginController {
     @Autowired
@@ -48,7 +46,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public int Logout(@Param("userid") BigInteger userid, @Param("token") String token){
+    public int Logout(@Param("userid") long userid, @Param("token") String token){
         if(tokenMangeer.confirmToken(userid ,token)){
             return userService.LogOut(userid);
         }

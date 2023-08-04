@@ -8,7 +8,7 @@ import com.eventiming.form2.util.Password2SHA;
 import com.eventiming.form2.util.TokenMangeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.math.BigInteger;
+
 import java.sql.Timestamp;
 
 
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public ResponseData<Object> ChangeUserName( BigInteger userid, String newName) {
+    public ResponseData<Object> ChangeUserName( long userid, String newName) {
         user result = userd.selectUserByUsername(newName);
         ResponseData<Object> responseData = new ResponseData<>();
         if(result == null){
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
         return responseData;
     }
 
-    public ResponseData<Object> ChangePassword(BigInteger userid, String newPassword) {
+    public ResponseData<Object> ChangePassword(long userid, String newPassword) {
         newPassword = password2SHA.hashPassword(newPassword);
         user result = userd.selectUserById(userid);
         ResponseData<Object> responseData = new ResponseData<>();
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
         return responseData;
     }
 
-    public ResponseData<Object> ChangeEmail(BigInteger userid, String newEmail) {
+    public ResponseData<Object> ChangeEmail(long userid, String newEmail) {
         user result = userd.selectUserByUsername(newEmail);
         ResponseData<Object> responseData = new ResponseData<>();
         if(result == null){
@@ -124,14 +124,14 @@ public class UserServiceImpl implements UserService {
         responseData.setCode("501");
         return responseData;
     }
-    public ResponseData<userstatus> UserInfo(BigInteger userid) {
+    public ResponseData<userstatus> UserInfo(long userid) {
         ResponseData<userstatus> responseData = new ResponseData<>();
         responseData.setCode("100");
         responseData.setData(userstatusdao.selectUserStatusById(userid));
         return responseData;
     }
 
-   public int LogOut(BigInteger userid){
+   public int LogOut(long userid){
         tokenMangeer.removeToken(userid);
         return 1;
    }

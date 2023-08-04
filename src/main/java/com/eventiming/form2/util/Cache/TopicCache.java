@@ -2,7 +2,7 @@ package com.eventiming.form2.util.Cache;
 
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -18,11 +18,11 @@ public class TopicCache {
             linkedList.addFirst(topicAndContext);
         }
     }
-    public TopicAndContext visitNode(BigInteger topicid){
+    public TopicAndContext visitNode(long topicid){
         Iterator<TopicAndContext> iterator = linkedList.iterator();
         while(iterator.hasNext()){
             TopicAndContext current = iterator.next();
-            if(iterator.next().topicid.equals(topicid)){
+            if(iterator.next().topicid ==topicid){
                 linkedList.remove(current);
                 linkedList.addFirst(current);
                 return current;

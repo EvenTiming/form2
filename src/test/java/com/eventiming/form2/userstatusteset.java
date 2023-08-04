@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.math.BigInteger;
+
 import java.sql.Timestamp;
 
 @SpringBootTest
@@ -25,7 +25,7 @@ class userstatusteset {
 //    @Test
 //    public void insertuser(){
 //        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-//        BigInteger userid = uig.generateUniqueId();
+//        long userid = uig.generateUniqueId();
 //        ud.insertUser(userid, username, password, email, timestamp);
 //        usdao.insertUserStatus(userid, 1, timestamp, 0,0);
 //
@@ -34,7 +34,7 @@ class userstatusteset {
     @Test
     public void testUser(){
 //        user u = ud.selectUserByUsername("allalalala");
-//        BigInteger id = u.getUserid();
+//        long id = u.getUserid();
 ////        ud.selectUserPasswordByUsername();
 ////        ud.selectUserByUsername();
 ////        ud.deleteUserById();
@@ -49,7 +49,7 @@ class userstatusteset {
 
     @Test
     public void testUserstatus(){
-//        BigInteger id = new BigInteger("324571690427821951");
+//        long id = new long("324571690427821951");
 //        int a = usdao.selectUserGroupById(id);
 //        System.out.println(a );
 //        System.out.println(usdao.selectUserIdByGroup(1));

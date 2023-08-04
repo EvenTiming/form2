@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
 
 @RestController
 public class UserInfoController {
@@ -20,9 +19,9 @@ public class UserInfoController {
     @Autowired
     private TokenMangeer tokenMangeer;
     @PostMapping("/changeName")
-    public ResponseData<Object> changeName(@Param("userid")BigInteger userid, @Param("newusername") String newusername,
+    public ResponseData<Object> changeName(@Param("userid")long userid, @Param("newusername") String newusername,
                           @Param("token") String token){
-        if(userid.equals("")||newusername.equals("")){
+        if((""+userid).equals("")||newusername.equals("")){
             ResponseData<Object> responseData =new ResponseData<>();
             responseData.setCode("400");
             return responseData;
@@ -38,10 +37,10 @@ public class UserInfoController {
     }
 
     @PostMapping("/changeEmail")
-    public ResponseData<Object> changeEmail(@Param("userid")BigInteger userid,
+    public ResponseData<Object> changeEmail(@Param("userid")long userid,
                                             @Param("newemail") String newemail,
                                             @Param("token") String token){
-        if(userid.equals("")||newemail.equals("")){
+        if((""+userid).equals("")||newemail.equals("")){
             ResponseData<Object> responseData =new ResponseData<>();
             responseData.setCode("400");
             return responseData;
@@ -56,10 +55,10 @@ public class UserInfoController {
     }
 
     @PostMapping("/changePassword")
-    public ResponseData<Object> chagePassword(@Param("userid")BigInteger userid,
+    public ResponseData<Object> chagePassword(@Param("userid")long userid,
                                               @Param("newpassword") String newpassword,
                                               @Param("token") String token){
-        if(userid.equals("")||newpassword.equals("")){
+        if((""+userid).equals("")||newpassword.equals("")){
             ResponseData<Object> responseData =new ResponseData<>();
             responseData.setCode("400");
             return responseData;
@@ -74,9 +73,9 @@ public class UserInfoController {
     }
 
     @GetMapping("/user")
-        public ResponseData<userstatus> userInfo(@Param("userid") BigInteger userid,
+        public ResponseData<userstatus> userInfo(@Param("userid") long userid,
                                                  @Param("token") String token){
-        if(userid.equals("")||token.equals("")){
+        if((""+userid).equals("")||token.equals("")){
             ResponseData<userstatus> responseData =new ResponseData<>();
             responseData.setCode("400");
             return responseData;

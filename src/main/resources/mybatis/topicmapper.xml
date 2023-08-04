@@ -14,7 +14,7 @@
         values (#{title}, #{userid}, #{username}, #{posttime}, #{lastreplyedtime}, #{lasteditedtime})
     </insert>
 
-    <delete id="deleteTopic" parameterType="java.math.BigInteger">
+    <delete id="deleteTopic" >
         delete from t_topic where topicid = #{topicid}
     </delete>
 

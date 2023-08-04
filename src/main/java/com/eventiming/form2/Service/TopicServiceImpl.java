@@ -7,7 +7,6 @@ import com.eventiming.form2.pojo.topic;
 import com.eventiming.form2.pojo.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,7 @@ public class TopicServiceImpl implements TopicService{
     @Autowired
     private postDao postdao;
 
-    public int createTopic(BigInteger userid, String title, String context){
+    public int createTopic(long userid, String title, String context){
         user u = userd.selectUserById(userid);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         topic t =new topic();
@@ -45,18 +44,18 @@ public class TopicServiceImpl implements TopicService{
         return 1;
 
     }
-    public int deleteTopic(BigInteger userid, BigInteger topicid){
+    public int deleteTopic(long userid, long topicid){
         topic t = topicDao.selectTopicById(topicid);
-        if(t.getUserid().equals(userid)){
+        if(t.getUserid() == userid){
             topicDao.deleteTopic(topicid);
             topiccontextdao.deleteContext(topicid);
             return 1;
         }
         return 0;
     }
-    public int updateTopicTitleById(BigInteger userid, BigInteger topicid, String newtitle){
+    public int updateTopicTitleById(long userid, long topicid, String newtitle){
         topic t = topicDao.selectTopicById(topicid);
-        if(t.getUserid().equals(userid)){
+        if(t.getUserid() == userid){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             topicDao.updateTopicTitle(topicid, newtitle);
             topicDao.updateTopicLastEditedTime(topicid, timestamp);
@@ -64,9 +63,9 @@ public class TopicServiceImpl implements TopicService{
         }
         return 0;
     }
-    public int updateTopicContextById(BigInteger userid, BigInteger topicid, String context){
+    public int updateTopicContextById(long userid, long topicid, String context){
         topic t = topicDao.selectTopicById(topicid);
-        if(t.getUserid().equals(userid)){
+        if(t.getUserid() == userid){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             topiccontextdao.updateContext(topicid, context);
             topicDao.updateTopicLastEditedTime(topicid, timestamp);
@@ -74,7 +73,7 @@ public class TopicServiceImpl implements TopicService{
         }
         return 0;
     }
-    public ResponseData<topic> selectTopicById(BigInteger topicid){
+    public ResponseData<topic> selectTopicById(long topicid){
         ResponseData<topic> responseData = new ResponseData<>();
         topic  t= topicDao.selectTopicById(topicid);
         if(t != null){
@@ -85,7 +84,7 @@ public class TopicServiceImpl implements TopicService{
         responseData.setCode("200");
         return responseData;
     }
-    public ResponseData<List<post>> selectTopicContextById(BigInteger topicid){
+    public ResponseData<List<post>> selectTopicContextById(long topicid){
         ResponseData<List<post>> responseData =new ResponseData<>();
         String t =topiccontextdao.selectContext(topicid);
        if(t!=null){
@@ -98,7 +97,7 @@ public class TopicServiceImpl implements TopicService{
         responseData.setCode("200");
         return responseData;
     }
-    public ResponseData<List<topic>> selectTopicByUserId(BigInteger userid){
+    public ResponseData<List<topic>> selectTopicByUserId(long userid){
 
         List<topic> list = topicDao.selectTopicByUser(userid);
         return Response(list);

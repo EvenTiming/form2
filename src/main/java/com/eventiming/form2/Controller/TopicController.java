@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -22,7 +21,7 @@ public class TopicController {
         return topicService.selectIndexTopics(num, offset);
     }
     @GetMapping("/topic-{i}")
-    public ResponseData<List<post>> getTopic(@PathVariable("i") BigInteger i){
+    public ResponseData<List<post>> getTopic(@PathVariable("i") long i){
         return topicService.selectTopicContextById(i);
     }
 
