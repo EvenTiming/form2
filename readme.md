@@ -29,3 +29,13 @@
 ### 决定搭建TopicCache层，
 + 取代service层和Dao层的链接
 + 需要重写PostServiceImpl 和 TopicServiceImpl中的方法
+
+# 下周任务
+
+1. 实现完善测试缓冲层，尽量降低耦合
+
+2. 实现数据库连接池
+
+3. 实现完善全验证层
+
+   
