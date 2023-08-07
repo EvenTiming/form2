@@ -13,23 +13,23 @@ public class TopicSequence {
     private TopicAndContext tail;
     public TopicSequence(){
         size = 0;
-        head = new TopicAndContext(null, null , null);
+       // head = new TopicAndContext(null, null , null);
         tail =head;
 
     }
 
-    public void addTopicAndContext(topic t, String tc,  PostHashMap postHashMap){
-        TopicAndContext topicAndContext = new TopicAndContext(t, tc, postHashMap);
-        if(size <= MAX_SPACE_NUM){
-            tail.setNext(topicAndContext);
-            topicAndContext.setPre(tail);
-            tail = topicAndContext;
-            size++;
-        } else{
-            tail = tail.getPre();
-            tail.setNext(null);
-        }
-    }
+//    public void addTopicAndContext(topic t, String tc,  PostHashMap postHashMap){
+//        TopicAndContext topicAndContext = new TopicAndContext(t, tc, postHashMap);
+//        if(size <= MAX_SPACE_NUM){
+//            tail.setNext(topicAndContext);
+//            topicAndContext.setPre(tail);
+//            tail = topicAndContext;
+//            size++;
+//        } else{
+//            tail = tail.getPre();
+//            tail.setNext(null);
+//        }
+//    }
 
     public TopicAndContext visitNode(long topicid){
         TopicAndContext topicAndContext = findNode(topicid);
