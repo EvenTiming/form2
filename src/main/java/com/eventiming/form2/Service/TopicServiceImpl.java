@@ -4,8 +4,6 @@ import com.eventiming.form2.DAO.*;
 import com.eventiming.form2.pojo.*;
 import com.eventiming.form2.util.BeforeTimeStamp;
 import com.eventiming.form2.util.Cache.PostHashMap;
-import com.eventiming.form2.util.Cache.TopicAndContext;
-import com.eventiming.form2.util.Cache.TopicCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
@@ -32,9 +30,6 @@ public class TopicServiceImpl implements TopicService{
 
     @Autowired
     private postinfoDao postinfodao;
-
-    @Autowired
-    private TopicCache topicCache;
 
     @Autowired
     private BeforeTimeStamp beforeTimeStamp;

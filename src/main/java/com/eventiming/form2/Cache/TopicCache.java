@@ -3,6 +3,7 @@ package com.eventiming.form2.Cache;
 import com.eventiming.form2.DAO.*;
 import com.eventiming.form2.pojo.*;
 import com.eventiming.form2.util.BeforeTimeStamp;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +16,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class TopicCache implements cache{
-    private LinkedList<MemoryTopic> memoryTopic;
+
     @Autowired
     private userdao userd;
     @Autowired
-    private com.eventiming.form2.DAO.topicDao topicDao;
+    private topicDao topicDao;
     @Autowired
     private topiccontextDao topiccontextdao;
     @Autowired
@@ -32,23 +33,21 @@ public class TopicCache implements cache{
     private postinfoDao postinfodao;
     @Autowired
     private BeforeTimeStamp beforeTimeStamp;
+
     private LinkedList<MemoryTopic> linkedList;
     private final int MAX_SIZE = 20;
-    public TopicCache(){
-        memoryTopic = new LinkedList<>();
-        // 构造函数，从数据库中读取72小时内的数据
-        Timestamp timestamp = beforeTimeStamp.getTime(72);
-        Timestamp time = beforeTimeStamp.getTime(72);
-        List<topic> topics = topicDao.selectTopicByEditedTime(time);
-        Iterator<topic> iterator = topics.iterator();
-        while(iterator.hasNext()){
-            List<topic> t = topicDao.selectIndexTopic(20,0);
-            Iterator<topic> it = t.listIterator();
-            while(it.hasNext()){
-                topic currenttopic = it.next();
-                MemoryTopic mt = getMemoryTopic(currenttopic);
-                linkedList.addLast(mt);
-            }
+
+    @PostConstruct
+    public void afterInjection() {
+        // 在这里可以进行依赖的操作，例如调用 topicDao 的方法等
+        // 这里的方法会在依赖注入完成后自动被调用
+        linkedList = new LinkedList<>();
+        List<topic> t = topicDao.selectIndexTopic(20,0);
+        Iterator<topic> it = t.listIterator();
+        while(it.hasNext()){
+            topic currenttopic = it.next();
+            MemoryTopic mt = getMemoryTopic(currenttopic);
+            linkedList.addLast(mt);
         }
     }
 
@@ -61,9 +60,11 @@ public class TopicCache implements cache{
         Timestamp lastreplyedtime = it.getLastreplyedtime();
         Timestamp lasteditedtime = it.getLasteditedtime();
         String context = topiccontextdao.selectContext(topicid);
-        long likenum = topicinfodao.selectTopicNumByID(topicid).getLikenum();
-        long storenum = topicinfodao.selectTopicNumByID(topicid).getStorenum();
-        long forward = topicinfodao.selectTopicNumByID(topicid).getForward();
+
+        topicinfo ti = topicinfodao.selectTopicNumByID(topicid);
+        long likenum = ti.getLikenum();
+        long storenum = ti.getStorenum();
+        long forward = ti.getForward();
         HashMap<Long, MemoryPost> memoryPost = getMemoryPostHashMap(topicid);
         return new MemoryTopic( topicid, title, userid,
          username, posttime, lastreplyedtime, lasteditedtime,
