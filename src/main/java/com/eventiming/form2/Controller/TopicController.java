@@ -1,6 +1,7 @@
 package com.eventiming.form2.Controller;
 
 import com.eventiming.form2.Service.TopicServiceImpl;
+import com.eventiming.form2.pojo.MemoryTopic;
 import com.eventiming.form2.pojo.ResponseData;
 import com.eventiming.form2.pojo.post;
 import com.eventiming.form2.pojo.topic;
@@ -22,9 +23,19 @@ public class TopicController {
     }
     @GetMapping("/topic-{i}")
     public ResponseData<List<post>> getTopic(@PathVariable("i") long i){
+        //数据库访问呢
         return topicService.selectTopicContextById(i);
     }
 
+    @GetMapping("mtopic-{i}")
+    public ResponseData<MemoryTopic> getMemoryTopic(@PathVariable("i") long i){
+        //快速访问
+       return topicService.selectMemoryTopicById(i);
+    }
+
+    //TODO 点赞帖子
+    //TODO 收藏帖子
+    //TODO 转发帖子
     // TODO 筛选帖子
 
 }
