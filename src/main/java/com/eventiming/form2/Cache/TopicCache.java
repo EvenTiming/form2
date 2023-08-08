@@ -4,6 +4,7 @@ import com.eventiming.form2.DAO.*;
 import com.eventiming.form2.pojo.*;
 import com.eventiming.form2.util.BeforeTimeStamp;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,19 +36,29 @@ public class TopicCache implements cache{
     private BeforeTimeStamp beforeTimeStamp;
 
     private LinkedList<MemoryTopic> linkedList;
-    private final int MAX_SIZE = 20;
+    private final int MAX_SIZE = 2;
 
     @PostConstruct
-    public void afterInjection() {
+    private void afterInjection() {
         // 在这里可以进行依赖的操作，例如调用 topicDao 的方法等
         // 这里的方法会在依赖注入完成后自动被调用
         linkedList = new LinkedList<>();
-        List<topic> t = topicDao.selectIndexTopic(20,0);
+        List<topic> t = topicDao.selectIndexTopic(2,0);
         Iterator<topic> it = t.listIterator();
         while(it.hasNext()){
             topic currenttopic = it.next();
             MemoryTopic mt = getMemoryTopic(currenttopic);
             linkedList.addLast(mt);
+        }
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        // 在 bean 销毁之前自动执行的操作
+        // 可以进行清理工作等
+        Iterator<MemoryTopic> it = linkedList.listIterator();
+        while(it.hasNext()){
+            WriteBackStorage(it.next());
         }
     }
 
@@ -60,7 +71,6 @@ public class TopicCache implements cache{
         Timestamp lastreplyedtime = it.getLastreplyedtime();
         Timestamp lasteditedtime = it.getLasteditedtime();
         String context = topiccontextdao.selectContext(topicid);
-
         topicinfo ti = topicinfodao.selectTopicNumByID(topicid);
         long likenum = ti.getLikenum();
         long storenum = ti.getStorenum();
@@ -178,7 +188,7 @@ public class TopicCache implements cache{
             return 0;
 
     }
-    public int createTopic(String title, long userid, String username,
+    public MemoryTopic createTopic(String title, long userid, String username,
                            String context){
         // TODO 涉及到唯一id的问题，计划采用唯一id生成方法，在内存中采用临时id
         long topicid = getOnlyMemoryID();
@@ -192,9 +202,15 @@ public class TopicCache implements cache{
         MemoryTopic mt = new MemoryTopic(topicid, title, userid,
                 username, posttime, lastreplyedtime, lasteditedtime,
                 context, likenum, storenum, forward, memoryPost,
-                false ,false, false,false);
-        linkedList.addFirst(mt);
-        return 1;
+                false ,false, true,false);
+        if(linkedList.size() < MAX_SIZE){
+            linkedList.addFirst(mt);
+        } else{
+            MemoryTopic removedTopic = linkedList.removeLast();
+            WriteBackStorage(removedTopic);
+            linkedList.addFirst(mt);
+        }
+        return mt;
     }
     public int createPost(long topicid, long userid, String postcontext ){
         // TODO 涉及到唯一id的问题，计划采用唯一id生成方法，在内存中采用临时id
@@ -280,8 +296,8 @@ public class TopicCache implements cache{
             t.setLasteditedtime(timestamp);
             topicDao.insertTopicObject(t);
             topiccontextdao.insertContext(t.getTopicid(),context);
-            topicinfodao.insertTopicInfo(topicid);
-            topicinfodao.updateTopicNumByID(topicid,likenum,
+            topicinfodao.insertTopicInfo(t.getTopicid());
+            topicinfodao.updateTopicNumByID(t.getTopicid(),likenum,
                     storenum,forward);
             userstatusdao.updateUserTopicNum(userid, timestamp);
             return 1;
@@ -293,7 +309,7 @@ public class TopicCache implements cache{
             }
             if(contextedited) {
                 topicDao.updateTopicLastEditedTime(topicid,lasteditedtime);
-                topicDao.updateTopicTitle(topicid,title);
+                topiccontextdao.updateContext(topicid,context);
             }
 
             topicDao.updateTopicLastReplyedTime(topicid, lastreplyedtime);
