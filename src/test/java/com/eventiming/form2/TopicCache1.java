@@ -24,4 +24,9 @@ public class TopicCache1 {
         topicCache.updatestorenum(id);
         topicCache.updatetitle(id,"ksdlfakjsdfka");
     }
+    @Test
+    public void test3(){
+        topicCache.createPost(28, 2, "hahahahah123");
+        topicCache.updatePostLikeNum(28, 6);
+    }
 }

@@ -214,14 +214,16 @@ public class TopicCache implements cache{
     }
     public int createPost(long topicid, long userid, String postcontext ){
         // TODO 涉及到唯一id的问题，计划采用唯一id生成方法，在内存中采用临时id
-        HashMap<Long, MemoryPost> map = visitTopic(topicid).getPostmap();
+        MemoryTopic currentTopic = visitTopic(topicid);
+        HashMap<Long, MemoryPost> map = currentTopic.getPostmap();
         long postid = getOnlyMemoryID();
         Timestamp posttimestamp = beforeTimeStamp.getTime(0);
+        currentTopic.setLastreplyedtime(posttimestamp);
         long likenum = 0;
-        boolean isNew = false;
+        boolean isNew = true;
         boolean isDeleted = false;
-            MemoryPost m = new MemoryPost(postid, userid, topicid,posttimestamp, postcontext,likenum,isNew,isDeleted);
-            map.put(postid, m);
+        MemoryPost m = new MemoryPost(postid, userid, topicid,posttimestamp, postcontext,likenum,isNew,isDeleted);
+        map.put(postid, m);
 
         return 1;
     }
@@ -241,6 +243,17 @@ public class TopicCache implements cache{
         if(visitTopic(topicid) != null){
             if( linkedList.getFirst().getPostmap().containsKey(postid)){
                 linkedList.getFirst().getPostmap().get(postid).setDeleted(true);
+                return 1;
+            }
+            return 0;
+        }
+        return 0;
+    }
+    public int updatePostLikeNum(long topicid, long postid){
+        if(visitTopic(topicid) != null){
+            if( linkedList.getFirst().getPostmap().containsKey(postid)){
+                MemoryPost m = linkedList.getFirst().getPostmap().get(postid);
+                m.setLikenum(m.getLikenum() + 1);
                 return 1;
             }
             return 0;
