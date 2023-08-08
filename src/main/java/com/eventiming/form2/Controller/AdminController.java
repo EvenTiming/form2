@@ -22,15 +22,12 @@ public class AdminController {
     public int deleteUser(long userid){
         return adminService.deleteUser(userid);
     }
-
     @PostMapping("/deleteTopic")
     public int deleteTopic(long topicid){
         return adminService.deleteTopic(topicid);
     }
-
-
     @PostMapping("/deletePost")
-    public int deletePost(long postid){
-        return adminService.deletePost(postid);
+    public int deletePost(long topicid ,long postid){
+        return adminService.deletePost(topicid, postid);
     }
 }

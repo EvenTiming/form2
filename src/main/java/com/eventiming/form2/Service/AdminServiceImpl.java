@@ -1,5 +1,6 @@
 package com.eventiming.form2.Service;
 
+import com.eventiming.form2.Cache.TopicCache;
 import com.eventiming.form2.DAO.postDao;
 import com.eventiming.form2.DAO.topicDao;
 import com.eventiming.form2.DAO.userdao;
@@ -19,6 +20,10 @@ public class AdminServiceImpl implements AdminService{
 
     @Autowired
     private postDao postdao;
+
+    @Autowired
+    private TopicCache topicCache;
+
     public int blockUser(long userid){
         return userstatusdao.updateUserGroupById(userid, 2);
     }
@@ -27,9 +32,9 @@ public class AdminServiceImpl implements AdminService{
         return userd.deleteUserById(userid);
     }
     public int deleteTopic(long topicid){
-        return topicdao.deleteTopic(topicid);
+        return topicCache.deleteTopic(topicid);
     }
-    public int deletePost(long postid){
-        return postdao.deletePostById(postid);
+    public int deletePost(long topicid, long postid){
+        return topicCache.deletePost(topicid, postid);
     }
 }

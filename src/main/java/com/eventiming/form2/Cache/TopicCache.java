@@ -206,6 +206,7 @@ public class TopicCache implements cache{
         if(linkedList.size() < MAX_SIZE){
             linkedList.addFirst(mt);
         } else{
+            userstatusdao.updateUserTopicNum(userid, posttime);
             MemoryTopic removedTopic = linkedList.removeLast();
             WriteBackStorage(removedTopic);
             linkedList.addFirst(mt);

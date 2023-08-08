@@ -1,5 +1,6 @@
 package com.eventiming.form2.Service;
 
+import com.eventiming.form2.Cache.TopicCache;
 import com.eventiming.form2.DAO.*;
 import com.eventiming.form2.pojo.*;
 import com.eventiming.form2.util.BeforeTimeStamp;
@@ -34,51 +35,78 @@ public class TopicServiceImpl implements TopicService{
     @Autowired
     private BeforeTimeStamp beforeTimeStamp;
 
+    @Autowired
+    private TopicCache topicCache;
+
 
     public int createTopic(long userid, String title, String context){
         user u = userd.selectUserById(userid);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        topic t =new topic();
-        t.setTitle(title);
-        t.setUsername(u.getUsername());
-        t.setUserid(userid);
-        t.setLastreplyedtime(timestamp);
-        t.setPosttime(timestamp);
-        t.setLasteditedtime(timestamp);
-        topicDao.insertTopicObject(t);
-        topiccontextdao.insertContext(t.getTopicid(),context);
-        userstatusdao.updateUserTopicNum(userid, timestamp);
+        topicCache.createTopic(title, userid ,u.getUsername(), context);
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//        topic t =new topic();
+//        t.setTitle(title);
+//        t.setUsername(u.getUsername());
+//        t.setUserid(userid);
+//        t.setLastreplyedtime(timestamp);
+//        t.setPosttime(timestamp);
+//        t.setLasteditedtime(timestamp);
+//        topicDao.insertTopicObject(t);
+//        topiccontextdao.insertContext(t.getTopicid(),context);
+//        userstatusdao.updateUserTopicNum(userid, timestamp);
         return 1;
-
     }
     public int deleteTopic(long userid, long topicid){
-        topic t = topicDao.selectTopicById(topicid);
-        if(t.getUserid() == userid){
-            topicDao.deleteTopic(topicid);
-            topiccontextdao.deleteContext(topicid);
-            return 1;
-        }
+//        topic t = topicDao.selectTopicById(topicid);
+//        if(t.getUserid() == userid){
+//            topicDao.deleteTopic(topicid);
+//            topiccontextdao.deleteContext(topicid);
+//            return 1;
+//        }
+//        return 0;
+        if(topicCache.visitTopic(topicid).getUserid() == userid)
+            return topicCache.deleteTopic(topicid);
         return 0;
     }
     public int updateTopicTitleById(long userid, long topicid, String newtitle){
-        topic t = topicDao.selectTopicById(topicid);
-        if(t.getUserid() == userid){
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            topicDao.updateTopicTitle(topicid, newtitle);
-            topicDao.updateTopicLastEditedTime(topicid, timestamp);
-            return 1;
+//        topic t = topicDao.selectTopicById(topicid);
+//        if(t.getUserid() == userid){
+//            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//            topicDao.updateTopicTitle(topicid, newtitle);
+//            topicDao.updateTopicLastEditedTime(topicid, timestamp);
+//            return 1;
+//        }
+//        return 0;
+        if(topicCache.visitTopic(topicid).getUserid() == userid){
+            return topicCache.updatetitle(topicid, newtitle);
         }
         return 0;
     }
     public int updateTopicContextById(long userid, long topicid, String context){
-        topic t = topicDao.selectTopicById(topicid);
-        if(t.getUserid() == userid){
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            topiccontextdao.updateContext(topicid, context);
-            topicDao.updateTopicLastEditedTime(topicid, timestamp);
-            return 1;
+//        topic t = topicDao.selectTopicById(topicid);
+//        if(t.getUserid() == userid){
+//            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//            topiccontextdao.updateContext(topicid, context);
+//            topicDao.updateTopicLastEditedTime(topicid, timestamp);
+//            return 1;
+//        }
+//        return 0;
+        if(topicCache.visitTopic(topicid).getUserid() == userid){
+            return topicCache.updatecontext(topicid, context);
         }
         return 0;
+    }
+
+    public ResponseData<MemoryTopic> selectMemoryTopicById(long topicid){
+        // 避免更改下面的代码，直接重写
+        ResponseData<MemoryTopic> responseData = new ResponseData<>();
+        MemoryTopic t = topicCache.visitTopic(topicid);
+        if(t != null){
+            responseData.setCode("100");
+            responseData.setData(t);
+        }
+        responseData.setCode("200");
+        return responseData;
+
     }
     public ResponseData<topic> selectTopicById(long topicid){
         ResponseData<topic> responseData = new ResponseData<>();
@@ -131,6 +159,17 @@ public class TopicServiceImpl implements TopicService{
 
         List<topic> list = topicDao.selectIndexTopic(num,offset);
         return Response(list);
+    }
+
+    public int likeTopic(long topicid){
+        return topicCache.updatelikenum(topicid);
+    }
+    public int storeTopic(long topicid){
+        return topicCache.updatestorenum(topicid);
+    }
+
+    public int forwardTopic(long topicid){
+        return  topicCache.updateforward(topicid);
     }
     private ResponseData<List<topic>> Response( List<topic> list){
         ResponseData<List<topic>> responseData =new ResponseData<>();

@@ -4,5 +4,5 @@ public interface AdminService {
     int blockUser(long userid);
     int deleteUser(long userid);
     int deleteTopic(long topicid);
-    int deletePost(long postid);
+    int deletePost(long topicid, long postid);
 }

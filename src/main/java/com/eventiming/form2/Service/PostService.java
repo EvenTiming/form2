@@ -7,7 +7,7 @@ import java.util.List;
 public interface PostService {
     int addpost(long userid, long topicid, String postcontext);
 
-    int deletepost(long postid);
+    int deletepost(long topicid, long postid);
 
     // TODO 支持更改
     List<post> selectPostByTopic(long topicid);
