@@ -7,7 +7,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -53,7 +52,7 @@ public class TopicCache implements cache{
     }
 
     @PreDestroy
-    public void preDestroy() {
+    private void preDestroy() {
         // 在 bean 销毁之前自动执行的操作
         // 可以进行清理工作等
         Iterator<MemoryTopic> it = linkedList.listIterator();
@@ -180,7 +179,7 @@ public class TopicCache implements cache{
     }
 
     static long minvalue = Long.MAX_VALUE - 10000;
-    public long getOnlyMemoryID(){
+    private long getOnlyMemoryID(){
         //TODO  唯一ID生成算法！,这个地方存在很大问题
         if(minvalue < Long.MAX_VALUE)
             return minvalue++;
