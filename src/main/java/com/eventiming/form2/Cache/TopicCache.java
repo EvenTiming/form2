@@ -97,7 +97,7 @@ public class TopicCache implements cache{
         return map;
     }
     @Override
-    public int WriteToMemory(long topicid) {
+    public synchronized int WriteToMemory(long topicid) {
         topic t = topicDao.selectTopicById(topicid);
         if(t == null)
             return 0;
@@ -112,7 +112,7 @@ public class TopicCache implements cache{
         return 1;
     }
 
-    public MemoryTopic visitTopic(long topicid){
+    public synchronized MemoryTopic visitTopic(long topicid){
         Iterator<MemoryTopic> it = linkedList.listIterator();
         while(it.hasNext()){
             MemoryTopic currentmt = it.next();
